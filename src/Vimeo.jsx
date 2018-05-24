@@ -48,6 +48,8 @@ export default class extends React.Component {
     loading: PropTypes.element,
     playButton: PropTypes.node,
     playerOptions: PropTypes.object,
+    // should probably be in proptypes!
+    allowFullScreen: PropTypes.bool,
     videoId: PropTypes.string.isRequired,
 
     // event callbacks
@@ -251,7 +253,7 @@ export default class extends React.Component {
     );
   };
 
-  renderIframe = () => {
+  renderIframe = (allowFullScreen) => {
     if (!this.state.showingVideo) {
       return;
     }
@@ -269,6 +271,7 @@ export default class extends React.Component {
         className='vimeo-embed'
         style={ embedVideoStyle }>
         <iframe
+          allowFullScreen={allowFullScreen}
           frameBorder='0'
           ref={el => {
             this._player = el;
@@ -295,7 +298,7 @@ export default class extends React.Component {
       <div className={ this.props.className } >
         { this.renderLoading(this.state.imageLoaded, this.props.loading) }
         { this.renderImage() }
-        { this.renderIframe() }
+        { this.renderIframe(this.props.allowFullScreen) }
       </div>
     );
   }
